@@ -1,0 +1,20 @@
+[configuration]
+entry_symbol = "gdzig_init"
+compatibility_minimum = 4.3
+reloadable = true
+
+[libraries]
+macos.debug = "lib/libdodge_the_creeps.dylib"
+macos.release = "lib/libdodge_the_creeps.dylib"
+windows.debug.x86_64 = "lib/dodge_the_creeps.dll"
+windows.release.x86_64 = "lib/dodge_the_creeps.dll"
+linux.debug.x86_64 = "lib/libdodge_the_creeps.so"
+linux.release.x86_64 = "lib/libdodge_the_creeps.so"
+linux.debug.arm64 = "lib/libdodge_the_creeps.so"
+linux.release.arm64 = "lib/libdodge_the_creeps.so"
+linux.debug.rv64 = "lib/libdodge_the_creeps.so"
+linux.release.rv64 = "lib/libdodge_the_creeps.so"
+openharmony.debug.arm64 = "lib/libdodge_the_creeps.so"
+openharmony.release.arm64 = "lib/libdodge_the_creeps.so"
+web.debug.wasm32 = "lib/libdodge_the_creeps.wasm"
+web.release.wasm32 = "lib/libdodge_the_creeps.wasm"

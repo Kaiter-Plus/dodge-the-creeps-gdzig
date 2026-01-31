@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://cavhb27dya87k"]
+
+[ext_resource type="PackedScene" uid="uid://dfikgof5t3wka" path="res://scenes/player.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://evu3qt6xiud" path="res://scenes/hud.tscn" id="2_0wfyh"]
+[ext_resource type="AudioStream" uid="uid://q2pf4fr8d0ks" path="res://assets/art/House In a Forest Loop.ogg" id="3_jyhfs"]
+[ext_resource type="AudioStream" uid="uid://dw26fpygeag8o" path="res://assets/art/gameover.wav" id="3_sugp2"]
+
+[sub_resource type="Curve2D" id="Curve2D_elqb8"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Main" type="Main" unique_id=301203821]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1118119496]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.219608, 0.372549, 0.380392, 1)
+
+[node name="Player" parent="." unique_id=1613012449 instance=ExtResource("1_o5qli")]
+
+[node name="MobTimer" type="Timer" parent="." unique_id=551940144]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="." unique_id=1931069371]
+
+[node name="StartTimer" type="Timer" parent="." unique_id=1152847079]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="." unique_id=1966587719]
+position = Vector2(240, 450)
+
+[node name="MobPath" type="Path2D" parent="." unique_id=493100272]
+curve = SubResource("Curve2D_elqb8")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath" unique_id=729998539]
+
+[node name="HUD" parent="." unique_id=20020285 instance=ExtResource("2_0wfyh")]
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=696642912]
+stream = ExtResource("3_jyhfs")
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="." unique_id=580405942]
+stream = ExtResource("3_sugp2")
