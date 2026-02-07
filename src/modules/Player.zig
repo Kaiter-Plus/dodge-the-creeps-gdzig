@@ -17,6 +17,9 @@ allocator: Allocator,
 base: *Area2D, // the Godot node instance backing this struct
 speed: f64 = 400.0, // How fast the player will move (pixels/sec).
 screen_size: Vector2 = .zero, // Size of the game window.
+is_touching: bool = false,
+smooth_follow: bool = true,
+target_position: Vector2 = .zero,
 
 pub fn create(allocator: *Allocator) !*Player {
     const self = try allocator.create(Player);
@@ -46,6 +49,15 @@ pub fn _ready(self: *Player) void {
 
 pub fn _process(self: *Player, delta: f64) void {
     if (Engine.isEditorHint()) return;
+
+    if (self.is_touching) {
+        if (self.smooth_follow) {
+            self.base.setPosition(self.base.getPosition().lerp(self.target_position, delta * self.speed * 0.1));
+        } else {
+            self.base.setPosition(self.target_position);
+        }
+        return;
+    }
 
     var velocity = Vector2.zero; // The player's movement vector.
     if (Input.isActionPressed(.fromLatin1("move_right", false), .{})) {
@@ -85,6 +97,27 @@ pub fn _process(self: *Player, delta: f64) void {
     self.base.setPosition(pos);
 }
 
+pub fn _input(self: *Player, event: *InputEvent) void {
+    if (event.getClass().eql(String.fromLatin1("InputEventScreenTouch"))) {
+        const touch_event = InputEventScreenTouch.downcast(event);
+        if (touch_event) |touch| {
+            if (touch.getIndex() == 0) {
+                self.is_touching = touch.isPressed();
+                if (self.is_touching) {
+                    self.target_position = self.base.getGlobalMousePosition();
+                }
+            }
+        }
+    } else if (event.getClass().eql(String.fromLatin1("InputEventScreenDrag"))) {
+        const drag_event = InputEventScreenDrag.downcast(event);
+        if (drag_event) |drag| {
+            if (drag.getIndex() == 0) {
+                self.target_position = self.base.getGlobalMousePosition();
+            }
+        }
+    }
+}
+
 pub fn onBodyEntered(self: *Player) void {
     self.base.hide(); // Player disappears after being hit.
     self.base.emit(Hit, .{}) catch {};
@@ -118,6 +151,9 @@ const Input = godot.class.Input;
 const Area2D = godot.class.Area2d;
 const CollisionShape2D = godot.class.CollisionShape2d;
 const AnimatedSprite2D = godot.class.AnimatedSprite2d;
+const InputEvent = godot.class.InputEvent;
+const InputEventScreenDrag = godot.class.InputEventScreenDrag;
+const InputEventScreenTouch = godot.class.InputEventScreenTouch;
 const Vector2 = godot.builtin.Vector2;
 const StringName = godot.builtin.StringName;
 const String = godot.builtin.String;
