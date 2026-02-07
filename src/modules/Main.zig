@@ -50,6 +50,15 @@ pub fn _enterTree(self: *Main) void {
     self.initializeHUD();
 }
 
+pub fn _process(self: *Main, _: f64) void {
+    const fps_node = self.getNodeAs(Label, String.fromLatin1("FPS"));
+    if (fps_node) |label| {
+        var fps_text_buf: [24]u8 = undefined;
+        const fps_text = std.fmt.bufPrintZ(&fps_text_buf, "FPS: {d}", .{Engine.getFramesPerSecond()}) catch unreachable;
+        label.setText(String.fromLatin1(fps_text));
+    }
+}
+
 pub fn gameOver(self: *Main) void {
     const score_timer_node = self.getNodeAs(Timer, String.fromLatin1("ScoreTimer"));
     if (score_timer_node) |timer| {
@@ -183,6 +192,7 @@ const Marker2D = godot.class.Marker2d;
 const PathFollow2D = godot.class.PathFollow2d;
 const CanvasLayer = godot.class.CanvasLayer;
 const AudioStreamPlayer = godot.class.AudioStreamPlayer;
+const Label = godot.class.Label;
 const Variant = godot.builtin.Variant;
 const String = godot.builtin.String;
 const StringName = godot.builtin.StringName;

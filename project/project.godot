@@ -73,10 +73,6 @@ mouse_down={
 ]
 }
 
-[input_devices]
-
-pointing/emulate_touch_from_mouse=true
-
 [native_extensions]
 
 paths=["res://zig.gdextension"]

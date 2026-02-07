@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://evu3qt6xiud" path="res://scenes/hud.tscn" id="2_0wfyh"]
 [ext_resource type="AudioStream" uid="uid://q2pf4fr8d0ks" path="res://assets/art/House In a Forest Loop.ogg" id="3_jyhfs"]
 [ext_resource type="AudioStream" uid="uid://dw26fpygeag8o" path="res://assets/art/gameover.wav" id="3_sugp2"]
+[ext_resource type="FontFile" uid="uid://cit6gwe5px1q8" path="res://assets/fonts/Xolonium-Regular.ttf" id="5_tbgi4"]
 
 [sub_resource type="Curve2D" id="Curve2D_elqb8"]
 _data = {
@@ -47,3 +48,12 @@ stream = ExtResource("3_jyhfs")
 
 [node name="DeathSound" type="AudioStreamPlayer" parent="." unique_id=580405942]
 stream = ExtResource("3_sugp2")
+
+[node name="FPS" type="Label" parent="." unique_id=383230646]
+offset_left = 8.0
+offset_right = 192.0
+offset_bottom = 45.0
+theme_override_fonts/font = ExtResource("5_tbgi4")
+theme_override_font_sizes/font_size = 32
+text = "FPS: 0"
+vertical_alignment = 1
